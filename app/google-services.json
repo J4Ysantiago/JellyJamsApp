@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "283554975567",
+    "project_id": "jellyjams-7f99f",
+    "storage_bucket": "jellyjams-7f99f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:283554975567:android:1d5dbc9ccc040371bdff3a",
+        "android_client_info": {
+          "package_name": "com.example.jellyjamsapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAeKSW4rQREXWOK2Yar9b_oEcgfDFFBXt8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
