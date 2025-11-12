@@ -13,7 +13,7 @@ import com.google.firebase.firestore.firestore
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        //hi this is bri
+        //hi this is bri!
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
