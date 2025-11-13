@@ -1,2 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources></resources>
+<resources>
+    <color name="purple_background">#2C1D3F</color>
+    <color name="button_background">#4A2B7A</color>
+</resources>
