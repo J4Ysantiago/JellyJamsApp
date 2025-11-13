@@ -10,9 +10,9 @@
               <option name="connection">
                 <ConnectionSetting>
                   <option name="appId" value="com.example.jellyjamsapp" />
-                  <option name="mobileSdkAppId" value="1:283554975567:android:1d5dbc9ccc040371bdff3a" />
-                  <option name="projectId" value="jellyjams-7f99f" />
-                  <option name="projectNumber" value="283554975567" />
+                  <option name="mobileSdkAppId" value="1:778878032775:android:885d73b5dce43c6851d122" />
+                  <option name="projectId" value="jellyjams-e3b9f" />
+                  <option name="projectNumber" value="778878032775" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />
