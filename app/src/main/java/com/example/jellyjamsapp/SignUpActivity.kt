@@ -34,13 +34,12 @@ class SignUpActivity : AppCompatActivity() {
                 auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
-                            // Sign in success, update UI with the signed-in user's information
                             Toast.makeText(this, "Sign-up successful!", Toast.LENGTH_SHORT).show()
-                            // TODO: Navigate to the main activity after successful sign-up
+                            // After sign-up, go back to LoginActivity
+                            startActivity(Intent(this, LoginActivity::class.java))
+                            finish()
                         } else {
-                            //ifsign in fails it will display a message
-                            Toast.makeText(baseContext, "Authentication failed: ${task.exception?.message}",
-                                Toast.LENGTH_SHORT).show()
+                            Toast.makeText(this, "Authentication failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                         }
                     }
             } else {
@@ -49,8 +48,8 @@ class SignUpActivity : AppCompatActivity() {
         }
 
         signInText.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
     }
 }

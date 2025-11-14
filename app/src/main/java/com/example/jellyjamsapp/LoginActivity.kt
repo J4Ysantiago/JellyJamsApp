@@ -39,12 +39,11 @@ class LoginActivity : AppCompatActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        // Configure Google Sign In
+        // Configure Google Sign-In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
-
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         val emailEditText = findViewById<EditText>(R.id.emailEditText)
@@ -52,10 +51,8 @@ class LoginActivity : AppCompatActivity() {
         val loginButton = findViewById<Button>(R.id.loginButton)
         val signUpText = findViewById<TextView>(R.id.signUpText)
         val googleButton = findViewById<Button>(R.id.googleButton)
-        val facebookButton = findViewById<Button>(R.id.facebookButton)
-        val appleButton = findViewById<Button>(R.id.appleButton)
 
-        // ------------ Email & Password Login ------------
+        // Email & Password login
         loginButton.setOnClickListener {
             val email = emailEditText.text.toString()
             val password = passwordEditText.text.toString()
@@ -65,13 +62,9 @@ class LoginActivity : AppCompatActivity() {
                     .addOnCompleteListener(this) { task ->
                         if (task.isSuccessful) {
                             Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show()
-                            goToMain()
+                            goToHome()
                         } else {
-                            Toast.makeText(
-                                this,
-                                "Authentication failed: ${task.exception?.message}",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            Toast.makeText(this, "Authentication failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                         }
                     }
             } else {
@@ -79,49 +72,36 @@ class LoginActivity : AppCompatActivity() {
             }
         }
 
-        // ------------ Navigate to Sign Up Screen ------------
+        // Navigate to Sign Up
         signUpText.setOnClickListener {
             startActivity(Intent(this, SignUpActivity::class.java))
         }
 
-        // ------------ Google Sign In ------------
+        // Google Sign-In
         googleButton.setOnClickListener {
             val signInIntent = googleSignInClient.signInIntent
             googleLauncher.launch(signInIntent)
-        }
-
-        // ------------ Placeholder Buttons ------------
-        facebookButton.setOnClickListener {
-            Toast.makeText(this, "Facebook sign-in not implemented yet", Toast.LENGTH_SHORT).show()
-        }
-
-        appleButton.setOnClickListener {
-            Toast.makeText(this, "Apple sign-in not implemented yet", Toast.LENGTH_SHORT).show()
         }
     }
 
     // Authenticate Google account with Firebase
     private fun firebaseAuthWithGoogle(account: GoogleSignInAccount?) {
         val credential = GoogleAuthProvider.getCredential(account?.idToken, null)
-
         auth.signInWithCredential(credential)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(this, "Google sign in successful!", Toast.LENGTH_SHORT).show()
-                    goToMain()
+                    goToHome()
                 } else {
-                    Toast.makeText(
-                        this,
-                        "Google authentication failed: ${task.exception?.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this, "Google authentication failed: ${task.exception?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
     }
 
-    // Navigate to MainActivity
-    private fun goToMain() {
-        startActivity(Intent(this, MainActivity::class.java))
-        finish()
+    // Navigate to HomeActivity
+    private fun goToHome() {
+        startActivity(Intent(this, HomeActivity::class.java))
+        finish() // Prevent back navigation to login
     }
+
 }
