@@ -38,7 +38,7 @@ class SignUpActivity : AppCompatActivity() {
                             Toast.makeText(this, "Sign-up successful!", Toast.LENGTH_SHORT).show()
                             // TODO: Navigate to the main activity after successful sign-up
                         } else {
-                            // If sign in fails, display a message to the user.
+                            //ifsign in fails it will display a message
                             Toast.makeText(baseContext, "Authentication failed: ${task.exception?.message}",
                                 Toast.LENGTH_SHORT).show()
                         }
