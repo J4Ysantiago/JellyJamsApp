@@ -22,6 +22,7 @@ class HomeActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
         }
+        //comment
     }
 }
 
