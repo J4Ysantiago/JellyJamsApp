@@ -24,12 +24,8 @@ class MainActivity : AppCompatActivity() {
 
         // --- Check if user is already logged in ---
         val auth = FirebaseAuth.getInstance()
-        if (auth.currentUser != null) {
-            // Already logged in → go straight to HomeActivity
-            startActivity(Intent(this, HomeActivity::class.java))
-            finish() // prevent returning to MainActivity
-            return
-        }
+
+
 
         // Not logged in → continue showing MainActivity
         enableEdgeToEdge()
