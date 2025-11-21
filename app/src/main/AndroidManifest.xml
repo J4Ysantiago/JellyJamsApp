@@ -33,11 +33,6 @@
         <activity
             android:name=".HomeActivity"
             android:exported="false" />  <!-- <- ADDED -->
-
-
-
-
-
     </application>
 
 

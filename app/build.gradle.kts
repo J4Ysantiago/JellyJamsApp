@@ -54,9 +54,6 @@ dependencies {
 
     implementation("androidx.core:core-splashscreen:1.0.1")
 
-
-    implementation("com.spotify.android:auth:2.0.2")
-
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
