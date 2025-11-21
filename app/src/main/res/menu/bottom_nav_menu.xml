@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_home"
+        android:title="Home"
+        android:icon="@drawable/starhome" />
+
+    <item
+        android:id="@+id/nav_mood"
+        android:title="Mood"
+        android:icon="@drawable/moodheadphones" />
+
+    <item
+        android:id="@+id/nav_leaderboard"
+        android:title="Leaderboard"
+        android:icon="@drawable/leaderboardbutton" />
+
+    <item
+        android:id="@+id/nav_friends"
+        android:title="Friends"
+        android:icon="@drawable/firstfriendsbutton" />
+
+    <item
+        android:id="@+id/nav_new"
+        android:title="New"
+        android:icon="@drawable/somethingnew" />
+
+</menu>
