@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Jelly Jams app</string>
     <string name="default_web_client_id">YOUR_CLIENT_ID_HERE.apps.googleusercontent.com</string>
+    <string name="home">Home</string>
+    <string name="mood">Mood</string>
+    <string name="profile">Profile</string>
 </resources>

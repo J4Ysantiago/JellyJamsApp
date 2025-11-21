@@ -1,9 +1,9 @@
 package com.example.jellyjamsapp
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 
 class HomeActivity : AppCompatActivity() {
@@ -12,16 +12,30 @@ class HomeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        window.setDecorFitsSystemWindows(false)
         setContentView(R.layout.activity_home)
 
         auth = FirebaseAuth.getInstance()
 
-        val logoutButton = findViewById<Button>(R.id.logoutButton)
-        logoutButton.setOnClickListener {
-            auth.signOut() // Force logout
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
+
+        // Load HomeFragment first
+        loadFragment(HomeFragment())
+
+        // Handle nav bar clicks
+        bottomNav.setOnItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.nav_home -> loadFragment(HomeFragment())
+                R.id.nav_mood -> loadFragment(MoodFragment())
+                R.id.nav_profile -> loadFragment(ProfileFragment())
+            }
+            true
         }
     }
-}
 
+    private fun loadFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, fragment)
+            .commit()
+    }
+}
