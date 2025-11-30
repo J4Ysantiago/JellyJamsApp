@@ -51,7 +51,7 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation("com.google.firebase:firebase-auth:23.0.0")
     implementation("com.google.android.gms:play-services-auth:21.2.0")
-
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
     implementation("androidx.core:core-splashscreen:1.0.1")
 
     implementation(libs.androidx.core.ktx)
