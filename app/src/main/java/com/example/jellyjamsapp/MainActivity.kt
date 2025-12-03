@@ -25,15 +25,10 @@ class MainActivity : AppCompatActivity() {
         // --- Check if user is already logged in ---
         val auth = FirebaseAuth.getInstance()
         if (auth.currentUser != null) {
-
-            val uid = auth.currentUser!!.uid
-            Log.d("FIREBASE_UID", "User UID = $uid")
-
             // Already logged in → go straight to HomeActivity
             startActivity(Intent(this, HomeActivity::class.java))
             finish() // prevent returning to MainActivity
             return
-
         }
 
         // Not logged in → continue showing MainActivity
@@ -62,6 +57,4 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, LoginActivity::class.java))
         }
     }
-
 }
-

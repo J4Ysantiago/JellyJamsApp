@@ -34,9 +34,21 @@
             android:name=".HomeActivity"
             android:exported="false" />  <!-- <- ADDED -->
 
+        <activity
+            android:name=".MoodActivity"
+            android:exported="false" />
 
+        <activity
+            android:name=".LeaderboardActivity"
+            android:exported="false" />
 
+        <activity
+            android:name=".FriendsActivity"
+            android:exported="false" />
 
+        <activity
+            android:name=".SomethingNewActivity"
+            android:exported="false" />
 
     </application>
 

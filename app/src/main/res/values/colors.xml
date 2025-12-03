@@ -2,4 +2,15 @@
 <resources>
     <color name="purple_background">#2C1D3F</color>
     <color name="button_background">#4A2B7A</color>
+
+    <color name="defaultMoodBackground">#E0E0E0</color>
+    <color name="defaultMoodText">#424242</color>
+    <color name="moodButtonDefault">#D3D3D3</color>
+
+    <color name="happy_color">#FFD700</color>
+    <color name="calm_color">#87CEFA</color>
+    <color name="neutral_color">#BDBDBD</color>
+    <color name="anxiety_color">#FF6347</color>
+    <color name="angry_color">#DC143C</color>
+    <color name="depressed_color">#4682B4</color>
 </resources>
