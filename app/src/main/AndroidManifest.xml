@@ -32,7 +32,7 @@
 
         <activity
             android:name=".HomeActivity"
-            android:exported="false" />  <!-- <- ADDED -->
+            android:exported="false" />
 
         <activity
             android:name=".MoodActivity"
@@ -44,7 +44,8 @@
 
         <activity
             android:name=".FriendsActivity"
-            android:exported="false" />
+            android:exported="false"
+            tools:ignore="Instantiatable" />
 
         <activity
             android:name=".SomethingNewActivity"
