@@ -132,4 +132,20 @@ class MoodActivity : AppCompatActivity() {
 
         db.collection("mood_entries").add(moodEntry)
     }
+
+    private fun awardPointsForMood() {
+        val userId = auth.currentUser?.uid ?: return
+
+
+        val userRef = db.collection("users").document(userId)
+
+
+        userRef.update("score", com.google.firebase.firestore.FieldValue.increment(10))
+            .addOnSuccessListener {
+                Log.d("ScoreUpdate", "User earned 10 points!")
+            }
+            .addOnFailureListener { e ->
+                Log.e("ScoreUpdate", "Failed to update score: ${e.message}")
+            }
+    }
 }
