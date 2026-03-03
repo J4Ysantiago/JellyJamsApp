@@ -175,8 +175,5 @@ class HomeFragment : Fragment() {
             } catch (e: Exception) {
 
 
-
-            }
-        }
-    }
+            }}}
 }
