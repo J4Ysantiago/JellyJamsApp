@@ -31,116 +31,103 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
+        android:alignmentMode="alignMargins"
         android:columnCount="3"
         android:rowCount="2"
-        android:alignmentMode="alignMargins"
-        app:layout_constraintBottom_toTopOf="@id/bottomNav"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
 
         <Button
             android:id="@+id/btnHappy"
-            android:text="Happy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:textSize="14sp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/moodButtonDefault"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
+            android:text="Happy"
             android:textColor="@android:color/black"
-            app:cornerRadius="18dp"
-            android:backgroundTint="@color/moodButtonDefault" />
+            android:textSize="14sp"
+            app:cornerRadius="18dp" />
 
         <Button
             android:id="@+id/btnCalm"
-            android:text="Calm"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:textSize="14sp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/moodButtonDefault"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
+            android:text="Calm"
             android:textColor="@android:color/black"
-            app:cornerRadius="18dp"
-            android:backgroundTint="@color/moodButtonDefault" />
+            android:textSize="14sp"
+            app:cornerRadius="18dp" />
 
         <Button
             android:id="@+id/btnNeutral"
-            android:text="Neutral"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:textSize="14sp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/moodButtonDefault"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
+            android:text="Neutral"
             android:textColor="@android:color/black"
-            app:cornerRadius="18dp"
-            android:backgroundTint="@color/moodButtonDefault" />
+            android:textSize="14sp"
+            app:cornerRadius="18dp" />
 
         <Button
             android:id="@+id/btnAnxiety"
-            android:text="Anxiety"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:textSize="14sp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/moodButtonDefault"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
+            android:text="Anxiety"
             android:textColor="@android:color/black"
-            app:cornerRadius="18dp"
-            android:backgroundTint="@color/moodButtonDefault" />
+            android:textSize="14sp"
+            app:cornerRadius="18dp" />
 
         <Button
             android:id="@+id/btnAngry"
-            android:text="Angry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:textSize="14sp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/moodButtonDefault"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
+            android:text="Angry"
             android:textColor="@android:color/black"
-            app:cornerRadius="18dp"
-            android:backgroundTint="@color/moodButtonDefault" />
+            android:textSize="14sp"
+            app:cornerRadius="18dp" />
 
         <Button
             android:id="@+id/btnDepressed"
-            android:text="Depressed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="4dp"
-            android:layout_columnWeight="1"
             android:layout_rowWeight="1"
-            android:textSize="14sp"
+            android:layout_columnWeight="1"
+            android:layout_margin="4dp"
+            android:backgroundTint="@color/moodButtonDefault"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
+            android:text="Depressed"
             android:textColor="@android:color/black"
-            app:cornerRadius="18dp"
-            android:backgroundTint="@color/moodButtonDefault" />
+            android:textSize="14sp"
+            app:cornerRadius="18dp" />
     </GridLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottomNav"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="@android:color/white"
-        app:itemIconTint="#000000"
-        app:itemTextColor="#000000"
-        app:labelVisibilityMode="labeled"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

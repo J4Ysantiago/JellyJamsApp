@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <queries>
+        <package android:name="com.google.android.gms" />
+    </queries>
 
     <application
         android:allowBackup="true"
@@ -34,21 +37,8 @@
             android:name=".HomeActivity"
             android:exported="false" />  <!-- <- ADDED -->
 
-        <activity
-            android:name=".MoodActivity"
-            android:exported="false" />
 
-        <activity
-            android:name=".LeaderboardActivity"
-            android:exported="false" />
 
-        <activity
-            android:name=".FriendsActivity"
-            android:exported="false" />
-
-        <activity
-            android:name=".SomethingNewActivity"
-            android:exported="false" />
 
     </application>
 

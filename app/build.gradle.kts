@@ -1,6 +1,3 @@
-import org.gradle.kotlin.dsl.dependencies
-
-
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -44,15 +41,24 @@ android {
 
 dependencies {
 
-    implementation(platform("com.google.firebase:firebase-bom:34.5.0"))
+    implementation("com.github.PhilJay:MPAndroidChart:v3.1.0")
+
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
+
+    implementation(platform("com.google.firebase:firebase-bom:34.10.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-firestore")
     implementation(libs.firebase.auth)
-    implementation("com.google.firebase:firebase-auth:23.0.0")
-    implementation("com.google.android.gms:play-services-auth:21.2.0")
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.8.1")
-    implementation("androidx.core:core-splashscreen:1.0.1")
+    implementation(libs.firebase.auth)
+    implementation("com.google.android.gms:play-services-auth:21.5.1")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
+    implementation("androidx.core:core-splashscreen:1.2.0")
+
+
+    implementation("com.squareup.retrofit2:retrofit:3.0.0")
+    implementation("com.squareup.retrofit2:converter-gson:3.0.0")
+
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)

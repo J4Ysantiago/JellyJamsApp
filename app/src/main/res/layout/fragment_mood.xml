@@ -27,11 +27,14 @@
         android:paddingEnd="24dp">
 
         <!-- Top text -->
+
+        <!-- FIRST ROW -->
+
         <TextView
             android:id="@+id/moodTitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="92dp"
             android:lineSpacingExtra="0dp"
             android:text="HOW ARE\nYOU\nFEELING\nTODAY"
             android:textColor="#000000"
@@ -39,7 +42,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- FIRST ROW -->
         <LinearLayout
             android:id="@+id/row1"
             android:layout_width="0dp"

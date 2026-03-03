@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
 class MoodFragment : Fragment() {
@@ -35,8 +37,11 @@ class MoodFragment : Fragment() {
         btnAngry.setOnClickListener { onMoodSelected("Angry") }
         btnDepressed.setOnClickListener { onMoodSelected("Depressed") }
 
+
         return view
     }
+
+
 
     private fun onMoodSelected(mood: String) {
         val uid = FirebaseAuth.getInstance().currentUser?.uid
@@ -47,21 +52,40 @@ class MoodFragment : Fragment() {
             return
         }
 
-        // Create a new mood entry
-        val moodData = hashMapOf(
-            "mood" to mood,
-            "timestamp" to System.currentTimeMillis()
-        )
+        val userRef = db.collection("users").document(uid)
 
-        db.collection("users")
-            .document(uid)
-            .collection("moods")
-            .add(moodData)
-            .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Saved: $mood", Toast.LENGTH_SHORT).show()
+        // 1️⃣ Ensure user document exists
+        userRef.get().addOnSuccessListener { snapshot ->
+            if (!snapshot.exists()) {
+                userRef.set(
+                    mapOf(
+                        "username" to "Anonymous Jelly",
+                        "score" to 0
+                    )
+                )
             }
-            .addOnFailureListener { e ->
-                Toast.makeText(requireContext(), "Error: ${e.message}", Toast.LENGTH_SHORT).show()
-            }
+
+            // 2️⃣ Save mood
+            userRef.collection("moods").add(
+                mapOf(
+                    "mood" to mood,
+                    "timestamp" to Timestamp.now()
+                )
+            )
+
+
+
+            // 3️⃣ Increment score
+            userRef.update("score", FieldValue.increment(1))
+                .addOnSuccessListener {
+                    Toast.makeText(
+                        requireContext(),
+                        "Saved: $mood (+1 point)",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+        }
     }
+
+
 }

@@ -13,4 +13,5 @@
     <color name="anxiety_color">#FF6347</color>
     <color name="angry_color">#DC143C</color>
     <color name="depressed_color">#4682B4</color>
+    <color name="current_user_highlight">#33FFFFFF</color>
 </resources>

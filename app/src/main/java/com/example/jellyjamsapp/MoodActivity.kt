@@ -1,6 +1,5 @@
 package com.example.jellyjamsapp
 
-import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -12,10 +11,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
-import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
-import java.util.Date
 
 private val GridLayout.children: List<View>
     get() = (0 until childCount).map { getChildAt(it) }
@@ -26,6 +23,7 @@ class MoodActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private lateinit var rootLayout: ConstraintLayout
     private lateinit var moodTitle: TextView
+
     // private lateinit var moodBackground: ImageView // REMOVED
     private lateinit var moodGrid: GridLayout
 
@@ -59,18 +57,7 @@ class MoodActivity : AppCompatActivity() {
         setMoodListeners()
 
         // Set up Bottom Navigation (unchanged)
-        val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
-        bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> { startActivity(Intent(this, HomeActivity::class.java)); true }
-                R.id.nav_mood -> true
-                R.id.nav_leaderboard -> { startActivity(Intent(this, LeaderboardActivity::class.java)); true }
-                R.id.nav_friends -> { startActivity(Intent(this, FriendsActivity::class.java)); true }
-                R.id.nav_new -> { startActivity(Intent(this, SomethingNewActivity::class.java)); true }
-                else -> false
-            }
-        }
-        bottomNav.selectedItemId = R.id.nav_mood
+
     }
 
     // Function to set up click listeners (unchanged)
@@ -102,11 +89,13 @@ class MoodActivity : AppCompatActivity() {
         moodGrid.children.filterIsInstance<Button>().forEach { btn ->
             if (btn.text.toString() == mood) {
                 // Highlight selected button with the mood color
-                btn.backgroundTintList = ContextCompat.getColorStateList(this, attributes.colorResId)
+                btn.backgroundTintList =
+                    ContextCompat.getColorStateList(this, attributes.colorResId)
                 btn.setTextColor(contrastColor)
             } else {
                 // Reset other buttons to default style
-                btn.backgroundTintList = ContextCompat.getColorStateList(this, R.color.moodButtonDefault)
+                btn.backgroundTintList =
+                    ContextCompat.getColorStateList(this, R.color.moodButtonDefault)
                 btn.setTextColor(Color.BLACK)
             }
         }
@@ -114,33 +103,35 @@ class MoodActivity : AppCompatActivity() {
 
     // Helper to determine text color contrast (unchanged)
     private fun isColorDark(color: Int): Boolean {
-        val darkness = 1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255
+        val darkness =
+            1 - (0.299 * Color.red(color) + 0.587 * Color.green(color) + 0.114 * Color.blue(color)) / 255
         return darkness >= 0.5
     }
 
     // Function to save the mood entry to Firebase Firestore (unchanged)
     private fun saveMoodEntry(mood: String) {
-        val userId = auth.currentUser?.uid
-        if (userId == null) {
-            Toast.makeText(this, "Authentication error: User not logged in. Cannot save mood.", Toast.LENGTH_LONG).show()
+        val uid = auth.currentUser?.uid
+        if (uid == null) {
+            Toast.makeText(this, "User not logged in", Toast.LENGTH_LONG).show()
             return
         }
 
         val moodEntry = hashMapOf(
-            "userId" to userId,
             "mood" to mood,
-            "timestamp" to Date()
+            "timestamp" to com.google.firebase.Timestamp.now()
         )
 
-        db.collection("mood_entries")
+        db.collection("users")
+            .document(uid)
+            .collection("moods")
             .add(moodEntry)
             .addOnSuccessListener {
                 Toast.makeText(this, "$mood mood recorded successfully!", Toast.LENGTH_SHORT).show()
-                Log.d("Firebase", "DocumentSnapshot added with ID: ${it.id}")
+                Log.d("Firebase", "Mood saved under users/$uid/moods")
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "Failed to save mood: ${e.message}", Toast.LENGTH_LONG).show()
-                Log.w("Firebase", "Error adding document", e)
+                Log.e("Firebase", "Error saving mood", e)
             }
     }
 }

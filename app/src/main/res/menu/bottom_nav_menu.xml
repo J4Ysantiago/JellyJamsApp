@@ -25,4 +25,9 @@
         android:title="New"
         android:icon="@drawable/somethingnew" />
 
+    <item
+        android:id="@+id/nav_settings"
+        android:icon="@android:drawable/ic_menu_manage"
+        android:title="Settings"/>
+
 </menu>
