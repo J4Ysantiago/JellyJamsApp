@@ -4,29 +4,163 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/material_dynamic_tertiary80">
+    android:paddingHorizontal="16dp"
+    android:background="@drawable/bg_gradient">
 
+    <!-- TITLE -->
     <TextView
         android:id="@+id/leaderboardTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:padding="25dp"
+        android:layout_marginTop="45dp"
         android:text="Leaderboard"
         android:textColor="@android:color/white"
-        android:textSize="22sp"
+        android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <!-- 🏆 TOP PODIUM -->
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/topPodium"
+        android:layout_width="0dp"
+        android:layout_height="232dp"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="24dp"
+        app:cardBackgroundColor="#33FFFFFF"
+        app:strokeColor="#55FFFFFF"
+        app:strokeWidth="1dp"
+        app:layout_constraintTop_toBottomOf="@id/leaderboardTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- FIRST -->
+            <ImageView
+                android:id="@+id/firstPlace"
+                android:layout_width="90dp"
+                android:layout_height="90dp"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/circle_gold"
+                android:padding="6dp"
+                android:src="@drawable/ic_launcher_foreground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Anonymous Jelly"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/firstPlace"
+                app:layout_constraintStart_toStartOf="@id/firstPlace"
+                app:layout_constraintTop_toBottomOf="@id/firstPlace" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="198"
+                android:textColor="#00E5FF"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/firstPlace"
+                app:layout_constraintStart_toStartOf="@id/firstPlace"
+                app:layout_constraintTop_toBottomOf="@id/firstPlace" />
+
+
+            <!-- SECOND -->
+            <ImageView
+                android:id="@+id/secondPlace"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/circle_silver"
+                android:src="@drawable/ic_launcher_foreground"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/firstPlace" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Jelly kev"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/secondPlace"
+                app:layout_constraintStart_toStartOf="@id/secondPlace"
+                app:layout_constraintTop_toBottomOf="@id/secondPlace" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="121"
+                android:textColor="#00E5FF"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/secondPlace"
+                app:layout_constraintStart_toStartOf="@id/secondPlace"
+                app:layout_constraintTop_toBottomOf="@id/secondPlace" />
+            \
+            <!-- THIRD -->
+            <ImageView
+                android:id="@+id/thirdPlace"
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:layout_marginTop="12dp"
+                android:layout_marginEnd="40dp"
+                android:background="@drawable/circle_bronze"
+                android:src="@drawable/ic_launcher_foreground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/firstPlace" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Jelly bob"
+                android:textColor="@android:color/white"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/thirdPlace"
+                app:layout_constraintStart_toStartOf="@id/thirdPlace"
+                app:layout_constraintTop_toBottomOf="@id/thirdPlace" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="120"
+                android:textColor="#00E5FF"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@id/thirdPlace"
+                app:layout_constraintStart_toStartOf="@id/thirdPlace"
+                app:layout_constraintTop_toBottomOf="@id/thirdPlace" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/leaderboardRecyclerView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:padding="8dp"
-        app:layout_constraintTop_toBottomOf="@id/leaderboardTitle"
+        android:padding="12dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/topPodium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>

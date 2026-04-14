@@ -14,10 +14,12 @@
 
     <!-- Tint layer to match Figma's bright yellow -->
     <View
+        android:id="@+id/colorOverlay"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#F3D335"
         android:alpha="0.85" />
+
 
     <!-- Content -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -87,6 +89,9 @@
                 android:text="Neutral" />
         </LinearLayout>
 
+
+
+
         <!-- SECOND ROW -->
         <LinearLayout
             android:id="@+id/row2"
@@ -126,10 +131,10 @@
             <Button
                 android:id="@+id/btnDepressed"
                 style="@style/MoodButtonStyle"
-                android:layout_width="0dp"
+                android:layout_width="20dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
-                android:text="Dpressd" />
+                android:text="Depressed" />
         </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

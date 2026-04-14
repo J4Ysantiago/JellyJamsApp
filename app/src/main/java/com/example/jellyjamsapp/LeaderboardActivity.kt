@@ -2,39 +2,46 @@ package com.example.jellyjamsapp
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.Query
 
 class LeaderboardActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
+    private lateinit var adapter: LeaderboardAdapter
     private val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_leaderboard)
 
+        // RecyclerView setup
         recyclerView = findViewById(R.id.leaderboardRecycler)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Load data from Firestore
+        adapter = LeaderboardAdapter()
+        recyclerView.adapter = adapter
+
         loadLeaderboardData()
 
-        // Handle Navigation
+        // Bottom Navigation
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottomNav)
         bottomNav.selectedItemId = R.id.nav_leaderboard
+
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nav_home -> { startActivity(Intent(this, HomeActivity::class.java)); true }
-                R.id.nav_mood -> { startActivity(Intent(this, MoodActivity::class.java)); true }
+                R.id.nav_home -> {
+                    startActivity(Intent(this, HomeActivity::class.java))
+                    true
+                }
+                R.id.nav_mood -> {
+                    startActivity(Intent(this, MoodActivity::class.java))
+                    true
+                }
                 R.id.nav_leaderboard -> true
-                R.id.nav_friends -> { startActivity(Intent(this, FriendsActivity::class.java)); true }
-                R.id.nav_new -> { startActivity(Intent(this, SomethingNewActivity::class.java)); true }
                 else -> false
             }
         }
@@ -42,26 +49,26 @@ class LeaderboardActivity : AppCompatActivity() {
 
     private fun loadLeaderboardData() {
         db.collection("users")
-            .orderBy("score", Query.Direction.DESCENDING) // Requires an Index in Firebase
-            .limit(50)
+            .orderBy("score")
             .get()
-            .addOnSuccessListener { result ->
-                val playerList = mutableListOf<Player>()
-                for (document in result) {
-                    val name = document.getString("username") ?: "Anonymous Jelly"
-                    val score = document.getLong("score")?.toInt() ?: 0
-                    playerList.add(Player(name, score))
-                }
+            .addOnSuccessListener { documents ->
 
-                if (playerList.isEmpty()) {
-                    Toast.makeText(this, "No players yet. Be the first!", Toast.LENGTH_SHORT).show()
-                }
+                val leaderboardList = documents.mapNotNull { doc ->
+                    val username = doc.getString("username")
+                    val score = doc.getLong("score")
+                    val userId = doc.id
 
-                recyclerView.adapter = LeaderboardAdapter(playerList)
-            }
-            .addOnFailureListener { exception ->
-                // Check Logcat for the auto-index link if this fails!
-                Toast.makeText(this, "Error: ${exception.message}", Toast.LENGTH_LONG).show()
+                    if (username != null && score != null) {
+                        LeaderboardUser(
+                            userId = userId,
+                            username = username,
+                            score = score.toInt()
+                        )
+                    } else null
+                }
+                    .sortedByDescending { it.score }
+
+                adapter.submitList(leaderboardList)
             }
     }
 }
