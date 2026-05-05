@@ -18,7 +18,9 @@ import com.google.firebase.firestore.ListenerRegistration
 
 class FriendsFragment : Fragment(R.layout.fragment_friends) {
 
-    private val adapter = FriendsAdapter()
+    private val adapter = FriendsAdapter { friend ->
+        confirmRemoveFriend(friend)
+    }
     private var friendsListener: ListenerRegistration? = null
     private var userListener: ListenerRegistration? = null
 
@@ -74,12 +76,17 @@ class FriendsFragment : Fragment(R.layout.fragment_friends) {
                         val friends = snapshot.documents.mapNotNull { doc ->
                             val username = doc.getString("username") ?: return@mapNotNull null
                             val score = (doc.get("score") as? Number)?.toLong() ?: 0L
+                            val currentSong = doc.getString("currentSong") ?: "Not listening"
+                            val currentMood = doc.getString("currentMood") ?: "No mood"
 
                             FriendUser(
                                 userId = doc.id,
                                 username = username,
-                                score = score
+                                score = score,
+                                currentSong = currentSong,
+                                currentMood = currentMood
                             )
+
                         }.sortedByDescending { it.score }
 
                         adapter.submitList(friends)
@@ -87,23 +94,29 @@ class FriendsFragment : Fragment(R.layout.fragment_friends) {
             }
     }
 
+
+
     private fun showAddFriendDialog() {
         val context = requireContext()
         val input = EditText(context)
-        input.hint = "Enter Friend UID"
+        input.hint = "Enter Username"
 
         AlertDialog.Builder(context)
             .setTitle("Add Friend 💜")
             .setView(input)
-            .setPositiveButton("Add") { _, _ ->
-                val friendUid = input.text.toString().trim()
-                if (friendUid.isNotEmpty()) {
-                    addFriend(friendUid)
+            .setPositiveButton("Search") { _, _ ->
+                val username = input.text.toString().trim()
+                    .replaceFirstChar { it.uppercase() }
+                if (username.isNotEmpty()) {
+                    findUserByUsername(username)
                 }
             }
             .setNegativeButton("Cancel", null)
             .show()
     }
+
+
+
 
     private fun addFriend(friendUid: String) {
         val currentUid = FirebaseAuth.getInstance().currentUser?.uid ?: return
@@ -126,4 +139,74 @@ class FriendsFragment : Fragment(R.layout.fragment_friends) {
             Toast.makeText(requireContext(), "User not found", Toast.LENGTH_SHORT).show()
         }
     }
+
+
+    private fun findUserByUsername(username: String) {
+        val db = FirebaseFirestore.getInstance()
+
+        db.collection("users")
+            .get()
+            .addOnSuccessListener { snapshot ->
+
+                val match = snapshot.documents.firstOrNull {
+                    it.getString("username")
+                        ?.trim()
+                        ?.equals(username.trim(), ignoreCase = true) == true
+                }
+
+                if (match != null) {
+                    val friendUid = match.id
+                    val friendName = match.getString("username") ?: "User"
+
+                    confirmAddFriend(friendName, friendUid)
+                } else {
+                    Toast.makeText(requireContext(), "User not found", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .addOnFailureListener {
+                Toast.makeText(requireContext(), "Error searching", Toast.LENGTH_SHORT).show()
+            }
+    }
+
+
+
+    private fun confirmAddFriend(username: String, uid: String) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Add $username?")
+            .setMessage("Do you want to add this friend?")
+            .setPositiveButton("Add") { _, _ ->
+                addFriend(uid)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun confirmRemoveFriend(friend: FriendUser) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Remove ${friend.username}?")
+            .setMessage("Do you want to remove this friend?")
+            .setPositiveButton("Remove") { _, _ ->
+                removeFriend(friend.userId)
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun removeFriend(friendUid: String) {
+        val currentUid = FirebaseAuth.getInstance().currentUser?.uid ?: return
+        val db = FirebaseFirestore.getInstance()
+
+        val currentUserRef = db.collection("users").document(currentUid)
+        val friendUserRef = db.collection("users").document(friendUid)
+
+        db.runBatch { batch ->
+            batch.update(currentUserRef, "friends", FieldValue.arrayRemove(friendUid))
+            batch.update(friendUserRef, "friends", FieldValue.arrayRemove(currentUid))
+        }.addOnSuccessListener {
+            Toast.makeText(requireContext(), "Friend removed 💔", Toast.LENGTH_SHORT).show()
+        }.addOnFailureListener {
+            Toast.makeText(requireContext(), "Failed to remove friend", Toast.LENGTH_SHORT).show()
+        }
+    }
+
 }

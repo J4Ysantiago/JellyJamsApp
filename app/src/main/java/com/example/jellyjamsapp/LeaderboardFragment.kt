@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -35,25 +36,58 @@ class LeaderboardFragment : Fragment() {
         loadLeaderboard()
     }
 
+
     private fun loadLeaderboard() {
         db.collection("users")
-            .get()
-            .addOnSuccessListener { documents ->
+            .addSnapshotListener { snapshot, error ->
 
-                val users = documents.mapNotNull { doc ->
-                    val username = doc.getString("username")
-                    val scoreLong = doc.getLong("score") ?: 0L
+                if (error != null) return@addSnapshotListener
+                if (snapshot == null) return@addSnapshotListener
 
-                    if (username != null) {
-                        LeaderboardUser(
-                            userId = doc.id,
-                            username = username,
-                            score = scoreLong.toInt()
-                        )
-                    } else null
+                val users = snapshot.documents.mapNotNull { doc ->
+                    val username = doc.getString("username") ?: return@mapNotNull null
+                    val score = doc.getLong("score") ?: 0
+
+                    LeaderboardUser(
+                        userId = doc.id,
+                        username = username,
+                        score = score
+                    )
                 }.sortedByDescending { it.score }
 
-                adapter.submitList(users)
+                updatePodium(users)
+
+                val remainingUsers = if (users.size > 3) {
+                    users.drop(3)
+                } else {
+                    emptyList()
+                }
+
+                updateRecyclerView(remainingUsers)
             }
+    }
+
+
+    private fun updatePodium(users: List<LeaderboardUser>) {
+        val root = view ?: return
+
+        if (users.isNotEmpty()) {
+            root.findViewById<TextView>(R.id.firstName).text = users[0].username
+            root.findViewById<TextView>(R.id.firstScore).text = "${users[0].score} moods"
+        }
+
+        if (users.size > 1) {
+            root.findViewById<TextView>(R.id.secondName).text = users[1].username
+            root.findViewById<TextView>(R.id.secondScore).text = "${users[1].score} moods"
+        }
+
+        if (users.size > 2) {
+            root.findViewById<TextView>(R.id.thirdName).text = users[2].username
+            root.findViewById<TextView>(R.id.thirdScore).text = "${users[2].score} moods"
+        }
+    }
+
+    private fun updateRecyclerView(users: List<LeaderboardUser>) {
+        adapter.submitList(users)
     }
 }

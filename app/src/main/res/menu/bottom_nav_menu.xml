@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_mood"
+        android:title="Mood"
+        android:icon="@drawable/like" />
+
     <item
         android:id="@+id/nav_home"
         android:title="Home"
         android:icon="@drawable/starhome" />
 
-    <item
-        android:id="@+id/nav_mood"
-        android:title="Mood"
-        android:icon="@drawable/moodheadphones" />
 
     <item
         android:id="@+id/nav_leaderboard"
@@ -23,7 +25,7 @@
     <item
         android:id="@+id/nav_new"
         android:title="Spin"
-        android:icon="@drawable/game_dice" />
+        android:icon="@drawable/lottery" />
 
     <item
         android:id="@+id/nav_settings"

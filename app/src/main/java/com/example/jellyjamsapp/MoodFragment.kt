@@ -60,7 +60,7 @@ class MoodFragment : Fragment() {
 
     private fun onMoodSelected(mood: String) {
 
-        // ✅ Track depressed mood
+
         if (mood == "Depressed") {
             trackDepressedMood()
         }
@@ -81,35 +81,59 @@ class MoodFragment : Fragment() {
 
         val userRef = db.collection("users").document(uid)
 
-        userRef.get().addOnSuccessListener { snapshot ->
-            if (!snapshot.exists()) {
-                userRef.set(
-                    mapOf(
-                        "username" to "Anonymous Jelly",
+        userRef.get().addOnSuccessListener { document ->
+            if (!document.exists()) {
+                val user = hashMapOf(
+                        "username" to "",
                         "score" to 0
                     )
-                )
+
+                userRef.set(user)
+
             }
 
-            userRef.collection("moods").add(
-                mapOf(
-                    "mood" to mood,
-                    "timestamp" to Timestamp.now()
-                )
-            )
 
-            userRef.update("score", FieldValue.increment(1))
-                .addOnSuccessListener {
+            val today = java.text.SimpleDateFormat("yyyy-MM-dd", java.util.Locale.getDefault())
+                .format(java.util.Date())
+
+            val moodRef = userRef.collection("moods").document(today)
+
+            moodRef.get().addOnSuccessListener { document ->
+
+                if (document.exists()) {
                     Toast.makeText(
                         requireContext(),
-                        "Saved: $mood (+1 point)",
+                        "You already added a mood today!",
                         Toast.LENGTH_SHORT
                     ).show()
+                } else {
+
+                    moodRef.set(
+                        mapOf(
+                            "mood" to mood,
+                            "timestamp" to Timestamp.now()
+                        )
+                    ).addOnSuccessListener {
+
+                        userRef.update("currentMood", mood)
+
+                        // (ONLY) increments if save worked
+                        userRef.update("score", FieldValue.increment(1))
+
+                        Toast.makeText(
+                            requireContext(),
+                            "Saved: $mood (+1 point)",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
+            }
         }
     }
 
-    // ✅ Track depressed count (weekly reset)
+
+
+
     private fun trackDepressedMood() {
         val prefs = requireContext().getSharedPreferences("mood_prefs", Context.MODE_PRIVATE)
 
@@ -132,7 +156,7 @@ class MoodFragment : Fragment() {
         }
     }
 
-    // ✅ Support popup
+    //  Support popup
     private fun showMentalHealthSupport() {
         AlertDialog.Builder(requireContext())
             .setTitle("You're not alone ❤️")
@@ -148,6 +172,7 @@ class MoodFragment : Fragment() {
             .setNegativeButton("Maybe later", null)
             .show()
     }
+
 
     private fun getMoodGradient(mood: String): IntArray {
         return when (mood) {

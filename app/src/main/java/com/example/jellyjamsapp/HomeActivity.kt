@@ -15,10 +15,12 @@ class HomeActivity : AppCompatActivity() {
 
         bottomNav = findViewById(R.id.bottomNav)
 
-        if (savedInstanceState == null) {
-            replaceFragment(HomeFragment())
-        }
+        bottomNav.selectedItemId = R.id.nav_mood
 
+        if (savedInstanceState == null) {
+            replaceFragment(MoodFragment())
+            bottomNav.selectedItemId = R.id.nav_mood
+        }
 
 
 
@@ -27,9 +29,10 @@ class HomeActivity : AppCompatActivity() {
         bottomNav.setOnItemSelectedListener { item ->
             when (item.itemId) {
 
+                R.id.nav_mood -> replaceFragment(MoodFragment())
+
                 R.id.nav_home -> replaceFragment(HomeFragment())
 
-                R.id.nav_mood -> replaceFragment(MoodFragment())
 
                 R.id.nav_leaderboard -> replaceFragment(LeaderboardFragment())
 
@@ -41,12 +44,7 @@ class HomeActivity : AppCompatActivity() {
             }
             true
         }
-
-
-
     }
-
-
 
 
     private fun replaceFragment(fragment: Fragment) {

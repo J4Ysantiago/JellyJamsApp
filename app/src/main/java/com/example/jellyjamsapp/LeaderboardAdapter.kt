@@ -7,15 +7,24 @@ import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.auth.FirebaseAuth
 
 class LeaderboardAdapter :
-    ListAdapter<LeaderboardUser, LeaderboardAdapter.ViewHolder>(DiffCallback()) {
+    ListAdapter<LeaderboardUser, LeaderboardAdapter.ViewHolder>(DIFF_CALLBACK) {
+
+    companion object {
+        val DIFF_CALLBACK = object : DiffUtil.ItemCallback<LeaderboardUser>() {
+            override fun areItemsTheSame(oldItem: LeaderboardUser, newItem: LeaderboardUser) =
+                oldItem.username == newItem.username
+
+            override fun areContentsTheSame(oldItem: LeaderboardUser, newItem: LeaderboardUser) =
+                oldItem == newItem
+        }
+    }
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val rank: TextView = view.findViewById(R.id.rankText)
         val username: TextView = view.findViewById(R.id.usernameText)
         val score: TextView = view.findViewById(R.id.scoreText)
+        val rank: TextView = view.findViewById(R.id.rankText)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -24,38 +33,14 @@ class LeaderboardAdapter :
         return ViewHolder(view)
     }
 
-
-
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val user = getItem(position)
 
-        holder.rank.text = when (position) {
-            0 -> "🥇"
-            1 -> "🥈"
-            2 -> "🥉"
-            else -> "#${position + 1}"
-        }
-
         holder.username.text = user.username
-        holder.score.text = user.score.toString()
+        holder.score.text = "${user.score} moods"
+        holder.rank.text = "#${position + 4}" // because top 3 are in podium
 
-        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-
-        if (user.userId == currentUserId) {
-            holder.itemView.setBackgroundResource(R.color.current_user_highlight)
-        } else {
-            holder.itemView.setBackgroundResource(android.R.color.transparent)
-        }
-    }
-
-
-
-
-    class DiffCallback : DiffUtil.ItemCallback<LeaderboardUser>() {
-        override fun areItemsTheSame(old: LeaderboardUser, new: LeaderboardUser) =
-            old.userId == new.userId
-
-        override fun areContentsTheSame(old: LeaderboardUser, new: LeaderboardUser) =
-            old == new
+        // subtle visual hierarchy
+        holder.itemView.alpha = if (position == 0) 1f else 0.85f
     }
 }

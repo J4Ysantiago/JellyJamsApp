@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.example.jellyjamsapp"
-    compileSdk = 36
+    compileSdk = 37
 
     defaultConfig {
         applicationId = "com.example.jellyjamsapp"
@@ -31,13 +31,15 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "11"
+
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
     }
-}
 
 dependencies {
 
@@ -45,7 +47,7 @@ dependencies {
 
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.10.0")
 
-    implementation(platform("com.google.firebase:firebase-bom:34.10.0"))
+    implementation(platform("com.google.firebase:firebase-bom:34.12.0"))
     implementation("com.google.firebase:firebase-analytics")
     implementation("com.google.firebase:firebase-database")
     implementation("com.google.firebase:firebase-firestore")
@@ -69,6 +71,9 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation("androidx.recyclerview:recyclerview:1.4.0")
+    implementation("com.github.bumptech.glide:glide:5.0.7")
 
 
+}
 }
